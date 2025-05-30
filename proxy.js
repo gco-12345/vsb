@@ -1,55 +1,62 @@
-//fron chatgpt will change later
-const http = require('http');
-const https = require('https');
-const url = require('url');
-const chalk = require('chalk');
+//fron chatgpt might change later
+// 💾 LOAD EXISTING BOOKMARKS OR START FRESH
+let myBookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
+drawMyBookmarks(); // 🚀 KICK THINGS OFF
 
-const PORT = 8080;
+// 🚀 SUPER REDIRECT FUNCTION
+function redrict() {
+  let linkInput = document.getElementById('url').value;
+  let finalURL;
 
-function getClient(protocol) {
-  return protocol === 'https:' ? https : http;
-}
-
-const server = http.createServer((req, res) => {
-  const parsedUrl = url.parse(req.url);
-  let targetUrl = parsedUrl.path.slice(1);
-
-  if (!targetUrl.startsWith('http://') && !targetUrl.startsWith('https://')) {
-    targetUrl = 'http://' + targetUrl;
+  if (checkIfURL(linkInput)) {
+    finalURL = linkInput.startsWith('http') ? linkInput : 'https://' + linkInput;
+  } else {
+    finalURL = 'https://www.google.com/search?q=' + encodeURIComponent(linkInput);
   }
 
-  console.log(
-    chalk.bgBlue.white('Proxy Request'),
-    chalk.yellow(req.method),
-    chalk.red(targetUrl)
-  );
+  // LOADING IFRAME THINGY ✨
+  let splashFrame = document.createElement('iframe');
+  splashFrame.src = 'loading.html';
+  splashFrame.style = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  `;
+  document.body.appendChild(splashFrame);
 
-  const targetParsed = url.parse(targetUrl);
+  let newTab = window.open('loading.html');
+  setTimeout(() => {
+    let tabCheck = newTab || "Blocked";
+    if (tabCheck === "Blocked" || !newTab || newTab.closed || typeof newTab.closed === "undefined") {
+      window.location.href = finalURL;
+    } else {
+      newTab.location.href = finalURL;
+      setTimeout(() => document.body.removeChild(splashFrame), 500);
+    }
+  }, 1000);
+}
 
-  const options = {
-    protocol: targetParsed.protocol,
-    hostname: targetParsed.hostname,
-    port: targetParsed.port || (targetParsed.protocol === 'https:' ? 443 : 80),
-    path: targetParsed.path,
-    method: req.method,
-    headers: req.headers
-  };
+// ✅ CHECKS IF IT'S A URL
+function checkIfURL(str) {
+  const regex = /^(https?:\/\/)?([\w\d-]+\.)+[\w]{2,}(\/.*)?$/;
+  return regex.test(str);
+}
 
-  const proxyReq = getClient(targetParsed.protocol).request(options, (proxyRes) => {
-    res.writeHead(proxyRes.statusCode, proxyRes.headers);
-    proxyRes.pipe(res, { end: true });
+// 😎 CUSTOM TEXT BOX PROMPT
+async function popupAsk(message, defaultText) {
+  document.getElementById("prompt-message").innerText = message;
+  document.getElementById("prompt-input").value = defaultText || "";
+  document.getElementById("overlay").style.display = "flex";
+
+  return new Promise(resolve => {
+    submitPrompt = function () {
+      let response = document.getElementById("prompt-input").value;
+      document.getElementById("overlay").style.display = "none";
+      resolve(response);
+      submitPrompt = null;
+    }
   });
-
-  proxyReq.on('error', (err) => {
-    console.error(chalk.bgRed.white('Proxy Error:'), err.message);
-    res.writeHead(500, { 'Content-Type': 'text/plain' });
-    res.end('Proxy error: ' + err.message);
-  });
-
-  req.pipe(proxyReq, { end: true });
-});
-
-server.listen(PORT, () => {
-  console.log(chalk.bgMagenta.white(`Proxy server running on http://localhost:${PORT}`));
-  console.log(chalk.yellow('Paste URLs after the slash, e.g., http://localhost:8080/http://example.com'));
-});
+}
