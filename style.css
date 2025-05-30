@@ -17,6 +17,7 @@ p {
   margin-bottom: 10px;
 }
 button {
+  font-family: 'Comfortaa';
   background-color: #0094ff;
   color: white;
   padding: 8px;
@@ -44,6 +45,7 @@ button.redrict:hover {
   background-color: #0065a9;
 }
 .container {
+  font-family: 'Comfortaa';
   position: relative;
   display: flex;
   flex-direction: column;
@@ -55,6 +57,7 @@ button.redrict:hover {
   color:white;
 }
 input{
+  font-family: 'Comfortaa';
   width:700px;
   height: 175px;
   background-color:yellow;
