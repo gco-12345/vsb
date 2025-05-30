@@ -1,15 +1,18 @@
 /*HOW UGLY WILL THIS BE??? */
+.text {
+  font-family: 'Comfortaa';
+  color:white;
+  font-weight: bold;
+  text-align: center;
+  color: white;
+}
 h1 {
   font-size: 50px;
-  font-family: 'Comfortaa';
   margin-bottom: 20px;
-  color: white; 
 }
 p {
   font-size: 25px;
-  font-family: 'Comfortaa';
   margin-bottom: 10px;
-  color: white;
 }
 button {
   background-color: #0094ff;
@@ -37,13 +40,6 @@ button.redrict {
 }
 button.redrict:hover {
   background-color: #0065a9;
-}
-.text {
-  font-size: 125px;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 25px;
-  color: white;
 }
 .container {
   position: relative;
