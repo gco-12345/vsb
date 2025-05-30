@@ -40,4 +40,3 @@ function isRealURL(str) {
   const pattern = /^(https?:\/\/)?([\w\d\-]+\.)+[\w]{2,}(\/.*)?$/i;
   return pattern.test(str);
 }
-
