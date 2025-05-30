@@ -1,11 +1,15 @@
 /*HOW UGLY WILL THIS BE??? */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
 .text {
   font-family: 'Comfortaa';
   font-size: 125px;
   color:white;
   font-weight: bold;
   text-align: center;
-  color: white;
 }
 button {
   background-color: #0094ff;
