@@ -1,7 +1,4 @@
 /*HOW UGLY WILL THIS BE??? */
-body {
-  background-color: #002f4f;
-}
 h1 {
   font-size: 50px;
   font-family: 'Comfortaa';
@@ -40,13 +37,6 @@ button.redrict {
 }
 button.redrict:hover {
   background-color: #0065a9;
-  color: white;
-  padding: 8px;
-  width: 400px;
-  height: 200px;
-  outline: 10px solid orange;
-  border: none;
-  cursor: pointer;
 }
 .text {
   font-size: 125px;
@@ -62,6 +52,7 @@ button.redrict:hover {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  width: 100vw;
   background-color:red;
   color:white;
 }
