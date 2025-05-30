@@ -2,6 +2,11 @@
 .text {
   font-family: 'Comfortaa';
   color:white;
+  font-size: 125px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 25px;
+  color: white;
 }
 h1 {
   font-size: 50px;
@@ -37,13 +42,6 @@ button.redrict {
 }
 button.redrict:hover {
   background-color: #0065a9;
-}
-.text {
-  font-size: 125px;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 25px;
-  color: white;
 }
 .container {
   position: relative;
