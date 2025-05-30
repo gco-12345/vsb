@@ -1,62 +1,43 @@
 //fron chatgpt might change later
-// 💾 LOAD EXISTING BOOKMARKS OR START FRESH
-let myBookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
-drawMyBookmarks(); // 🚀 KICK THINGS OFF
+function redirect() {
+  const input = document.getElementById("url").value.trim();
+  let finalUrl;
 
-// 🚀 SUPER REDIRECT FUNCTION
-function redrict() {
-  let linkInput = document.getElementById('url').value;
-  let finalURL;
-
-  if (checkIfURL(linkInput)) {
-    finalURL = linkInput.startsWith('http') ? linkInput : 'https://' + linkInput;
+  // Check if input is a real URL
+  if (isRealURL(input)) {
+    finalUrl = input.startsWith("http") ? input : "https://" + input;
   } else {
-    finalURL = 'https://www.google.com/search?q=' + encodeURIComponent(linkInput);
+    finalUrl = "https://www.google.com/search?q=" + encodeURIComponent(input);
   }
 
-  // LOADING IFRAME THINGY ✨
-  let splashFrame = document.createElement('iframe');
-  splashFrame.src = 'loading.html';
-  splashFrame.style = `
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
-  `;
-  document.body.appendChild(splashFrame);
+  // Add loading splash iframe
+  const loadingFrame = document.createElement("iframe");
+  loadingFrame.src = "loading.html";
+  loadingFrame.style.position = "fixed";
+  loadingFrame.style.top = 0;
+  loadingFrame.style.left = 0;
+  loadingFrame.style.width = "100%";
+  loadingFrame.style.height = "100%";
+  loadingFrame.style.border = "none";
+  document.body.appendChild(loadingFrame);
 
-  let newTab = window.open('loading.html');
+  // Try to open in a new tab, fallback if blocked
+  const newTab = window.open("loading.html");
+
   setTimeout(() => {
-    let tabCheck = newTab || "Blocked";
-    if (tabCheck === "Blocked" || !newTab || newTab.closed || typeof newTab.closed === "undefined") {
-      window.location.href = finalURL;
+    if (!newTab || newTab.closed || typeof newTab.closed === "undefined") {
+      window.location.href = finalUrl;
     } else {
-      newTab.location.href = finalURL;
-      setTimeout(() => document.body.removeChild(splashFrame), 500);
+      newTab.location.href = finalUrl;
+      setTimeout(() => {
+        document.body.removeChild(loadingFrame);
+      }, 500);
     }
   }, 1000);
 }
 
-// ✅ CHECKS IF IT'S A URL
-function checkIfURL(str) {
-  const regex = /^(https?:\/\/)?([\w\d-]+\.)+[\w]{2,}(\/.*)?$/;
-  return regex.test(str);
+function isRealURL(str) {
+  const pattern = /^(https?:\/\/)?([\w\d\-]+\.)+[\w]{2,}(\/.*)?$/i;
+  return pattern.test(str);
 }
 
-// 😎 CUSTOM TEXT BOX PROMPT
-async function popupAsk(message, defaultText) {
-  document.getElementById("prompt-message").innerText = message;
-  document.getElementById("prompt-input").value = defaultText || "";
-  document.getElementById("overlay").style.display = "flex";
-
-  return new Promise(resolve => {
-    submitPrompt = function () {
-      let response = document.getElementById("prompt-input").value;
-      document.getElementById("overlay").style.display = "none";
-      resolve(response);
-      submitPrompt = null;
-    }
-  });
-}
