@@ -13,7 +13,26 @@ button {
 button:hover {
   background-color: #017fd9;
 }
-
+button.redrict {
+  background-color: #0099ff;
+  color: white;
+  padding: 8px;
+  width: 400px;
+  height: 200px;
+  outline: 10px solid orange;
+  border: none;
+  cursor: pointer;
+}
+button.redrict:hover {
+  background-color: #0065a9;
+  color: white;
+  padding: 8px;
+  width: 400px;
+  height: 200px;
+  outline: 10px solid orange;
+  border: none;
+  cursor: pointer;
+}
 .text {
   font-size: 125px;
   font-weight: bold;
