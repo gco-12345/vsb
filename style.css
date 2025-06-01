@@ -44,6 +44,13 @@ button.redrict {
 button.redrict:hover {
   background-color: #0065a9;
 }
+button.bookmark {
+  position: fixed;
+  bottom: 20px;
+  right: 20px
+  width: 200px;
+  height: 100px;
+}
 .container {
   font-family: 'Comfortaa';
   position: relative;
