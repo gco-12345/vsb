@@ -18,12 +18,12 @@ p {
 }
 button {
   font-family: 'Comfortaa';
-  background-color: #0094ff;
+  background-color: red;
   color: white;
   padding: 8px;
   width: 400px;
   height: 200px;
-  outline: 10px solid pink;
+  outline: 10px solid yellow;
   border: none;
   cursor: pointer;
 }
