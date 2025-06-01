@@ -1,4 +1,4 @@
-//fron chatgpt might change later
+//parts from chatgpt might change later
 function redirect() {
   const input = document.getElementById("url").value.trim();
   let finalUrl;
@@ -39,4 +39,12 @@ function redirect() {
 function isRealURL(str) {
   const pattern = /^(https?:\/\/)?([\w\d\-]+\.)+[\w]{2,}(\/.*)?$/i;
   return pattern.test(str);
+}
+function bookmark () {
+  let bookmarkedurl;
+  if (isRealID(input)) {
+    bookmarkedurl = input.startsWith("http") ? input : "https://" + input;
+  } else {
+    alert("Sorry, we couldn't save your bookmarked link. Please enter a real link";)
+  }
 }
