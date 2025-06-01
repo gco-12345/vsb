@@ -47,7 +47,7 @@ button.redrict:hover {
 button.bookmark {
   position: fixed;
   bottom: 20px;
-  right: 20px
+  right: 20px;
   width: 200px;
   height: 100px;
 }
