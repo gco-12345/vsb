@@ -1,4 +1,3 @@
-//parts from chatgpt might change later
 function redirect() {
   const input = document.getElementById("url").value.trim();
   let finalUrl;
@@ -19,6 +18,7 @@ function redirect() {
   loadingFrame.style.width = "100%";
   loadingFrame.style.height = "100%";
   loadingFrame.style.border = "none";
+  loadingFrame.style.zIndex = 9999;
   document.body.appendChild(loadingFrame);
 
   // Try to open in a new tab, fallback if blocked
@@ -30,7 +30,9 @@ function redirect() {
     } else {
       newTab.location.href = finalUrl;
       setTimeout(() => {
-        document.body.removeChild(loadingFrame);
+        if (document.body.contains(loadingFrame)) {
+          document.body.removeChild(loadingFrame);
+        }
       }, 500);
     }
   }, 1000);
@@ -40,11 +42,17 @@ function isRealURL(str) {
   const pattern = /^(https?:\/\/)?([\w\d\-]+\.)+[\w]{2,}(\/.*)?$/i;
   return pattern.test(str);
 }
-function bookmark () {
-  let bookmarkedurl;
-  if (isRealID(input)) {
-    bookmarkedurl = input.startsWith("http") ? input : "https://" + input;
+
+// Bookmark function fixed
+function bookmark() {
+  const input = document.getElementById("url").value.trim();
+  let bookmarkedUrl;
+
+  if (isRealURL(input)) {
+    bookmarkedUrl = input.startsWith("http") ? input : "https://" + input;
+    alert("Bookmarked: " + bookmarkedUrl);
+    // You could store it in localStorage or another method here
   } else {
-    alert("Sorry, we couldn't save your bookmarked link. Please enter a real link";)
+    alert("Sorry, we couldn't save your bookmarked link. Please enter a real link.");
   }
 }
