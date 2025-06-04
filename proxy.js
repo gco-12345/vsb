@@ -1,3 +1,4 @@
+// parts from chatgpt might change later
 function redirect() {
   const input = document.getElementById("url").value.trim();
   let finalUrl;
