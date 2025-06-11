@@ -3,7 +3,6 @@ function redirect() {
   const input = document.getElementById("url").value.trim();
   let finalUrl;
 
-  // Check if input is a real URL
   if (isRealURL(input)) {
     finalUrl = input.startsWith("http") ? input : "https://" + input;
   } else {
@@ -22,7 +21,7 @@ function redirect() {
   loadingFrame.style.zIndex = 9999;
   document.body.appendChild(loadingFrame);
 
-  // Try to open in a new tab, fallback if blocked
+  // Try to open in new tab
   const newTab = window.open("loading.html");
 
   setTimeout(() => {
@@ -44,16 +43,54 @@ function isRealURL(str) {
   return pattern.test(str);
 }
 
-// Bookmark function fixed
+// Bookmark a URL
 function bookmark() {
   const input = document.getElementById("url").value.trim();
   let bookmarkedUrl;
 
   if (isRealURL(input)) {
     bookmarkedUrl = input.startsWith("http") ? input : "https://" + input;
-    alert("Bookmarked: " + bookmarkedUrl);
-    // You could store it in localStorage or another method here
+
+    const bookmarks = JSON.parse(localStorage.getItem("bookmarks") || "[]");
+
+    if (!bookmarks.includes(bookmarkedUrl)) {
+      bookmarks.push(bookmarkedUrl);
+      localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+      alert("Bookmarked: " + bookmarkedUrl);
+    } else {
+      alert("Already bookmarked.");
+    }
+
+    showBookmarks();
   } else {
-    alert("Sorry, we couldn't save your bookmarked link. Please enter a real link.");
+    alert("Please enter a valid URL to bookmark.");
   }
 }
+
+// Display bookmarks
+function showBookmarks() {
+  const container = document.getElementById("bookmarksContainer");
+  container.innerHTML = "";
+
+  const bookmarks = JSON.parse(localStorage.getItem("bookmarks") || "[]");
+
+  if (bookmarks.length === 0) {
+    container.innerHTML = "<p>No bookmarks yet.</p>";
+    return;
+  }
+
+  bookmarks.forEach(url => {
+    const link = document.createElement("a");
+    link.href = url;
+    link.textContent = url;
+    link.target = "_blank";
+    link.className = "bookmark-link";
+    container.appendChild(link);
+    container.appendChild(document.createElement("br"));
+  });
+}
+
+// Load bookmarks on page load
+window.onload = () => {
+  showBookmarks();
+};
